@@ -3,6 +3,20 @@
 import sys
 
 import numpy as np
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    seq = request.args.get('seq')
+    matrix, output, structure = nussinov(seq)
+
+    response = {
+            "matrix" : matrix.tolist() ,
+            "dot-parantheses" : output}
+    return jsonify(response), 200
+
 
 min_loop_length = 1
 
@@ -103,7 +117,7 @@ def nussinov(sequence):
     i = 0
     j = len(output) - 1
     while (i < j):
-        DP[i][j] = float('inf')
+        DP[i][j] = 100000000
         print(i, j)
         if (output[i] == '(' and output[j]  == ')'):
             i += 1
@@ -115,7 +129,8 @@ def nussinov(sequence):
             j -= 1
         elif (output[i] == '.' and output[j] ==')'):
             i += 1
-    print(DP)
-    return (output, structure)
+
+    return (DP, output, structure)
 if __name__ == "__main__":
-    print(nussinov(sys.argv[1]))
+    # print(nussinov(sys.argv[1]))
+    app.run(debug=True)
