@@ -11,12 +11,13 @@ app = Flask(__name__)
 def index():
     seq = request.args.get('seq')
     DP = nussinov(seq)
-    result = traceback(DP, seq)
-    DP = color_path(DP, result)
+    result, path = traceback(DP, seq)
+    # DP = color_path(DP, path)
 
     response = {
             "matrix" : DP.tolist() ,
-            "dot-parantheses" : result}
+            "dot-parantheses" : result,
+            "path" : path}
     return jsonify(response), 200
 
 
@@ -53,12 +54,14 @@ def nussinov(seq):
     return DP
             
 def traceback(DP, seq):
+    path = []
     matches = []
     N = len(seq)
     s = []
     s.append((0, N-1))
     while (len(s) != 0):
         i, j = s.pop()
+        path.append((i, j))
         if (i >= j):
             continue
         elif (i < N-1 and DP[i+1][j] == DP[i][j]):
@@ -79,31 +82,19 @@ def traceback(DP, seq):
     for s in matches:
         dot_bracket[min(s)] = "("
         dot_bracket[max(s)] = ")"
-    return "".join(dot_bracket)
+    return "".join(dot_bracket), path
 
-def color_path(DP, dotpar):
+def color_path(DP, path):
     # COLORING IN THE VISUAL PART
-    i = 0
-    j = len(dotpar) - 1
-    while (i < j):
-        DP[i][j] = 10000000
-        # print(i, j)
-        if (dotpar[i] == '(' and dotpar[j]  == ')'):
-            i += 1
-            j -= 1
-        elif (dotpar[i] == '.' and dotpar[j] == '.'):
-            i += 1
-            j -= 1
-        elif (dotpar[i] == '(' and dotpar[j] == '.'):
-            j -= 1
-        elif (dotpar[i] == '.' and dotpar[j] ==')'):
-            i += 1
+    for i, j in path:
+        DP[i][j] = 1000000
     return DP
 
 if __name__ == "__main__":
     # DP = nussinov(sys.argv[1])
-    # result = traceback(DP, sys.argv[1])
-    # DP = color_path(DP, result)
+    # print(DP)
+    # result, path = traceback(DP, sys.argv[1])
+    # DP = color_path(DP, path)
     # print(DP)
     # print(result)
     app.run(debug=True)
