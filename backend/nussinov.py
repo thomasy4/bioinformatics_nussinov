@@ -8,20 +8,28 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     seq = request.args.get('seq')
-    DP = nussinov(seq)
-    result, path = traceback(DP, seq)
-    # DP = color_path(DP, path)
+    if (validity_check(seq)):
+        DP = nussinov(seq)
+        result, path = traceback(DP, seq)
+        # DP = color_path(DP, path)
 
-    response = {
-            "matrix" : DP.tolist() ,
-            "dot-parantheses" : result,
-            "path" : path}
-    return jsonify(response), 200
+        response = {
+                "matrix" : DP.tolist() ,
+                "dot-parantheses" : result,
+                "path" : path}
+        return jsonify(response), 200
+    else:
+        response = {"Error:":"Not a valid RNA sequence"}
+        return jsonify(response), 400
 
-
+def validity_check(seq):
+    for c in seq.upper():
+        if (c not in ['A', 'U', 'G', 'C']):
+            return False
+    return True
 
 def pair_check(tup):
-    if tup in [('A', 'U'), ('U', 'A'), ('C', 'G'), ('G', 'C')]:
+    if tup in [('A', 'U'), ('U', 'A'), ('C', 'G'), ('G', 'C'), ('a', 'u'), ('u', 'a'), ('c', 'g'), ('g', 'c')]:
         return True
     return False
 
@@ -90,9 +98,9 @@ def color_path(DP, path):
 
 if __name__ == "__main__":
     # DP = nussinov(sys.argv[1])
-    # print(DP)
+    # # print(DP)
     # result, path = traceback(DP, sys.argv[1])
     # DP = color_path(DP, path)
-    # print(DP)
+    # # print(DP)
     # print(result)
     app.run(debug=True)
