@@ -1,5 +1,3 @@
-## Nussinov RNA folding algorithm + recursive backtrack. Implemented by Carlos G. Oliver ##
-
 import sys
 
 import numpy as np
