@@ -4,7 +4,7 @@ import MatrixTable from './MatrixTable'
 import { Form, Button, Modal } from 'react-bootstrap'; 
 //import 'bootstrap/dist/css/bootstrap.min.css';
 
-const API_URL = "https://nussinov-backend.herokuapp.com"
+const API_URL = "localhost:5000"
 
 class App extends React.Component {
   constructor(props) {
