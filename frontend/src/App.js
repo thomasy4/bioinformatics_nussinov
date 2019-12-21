@@ -43,7 +43,6 @@ class App extends React.Component {
     this.setState({ showInvalidText: false})
   }
 
-
   async handleSubmit() {
     if (this.validateSequence()) {
       await this.getSequence(this.state.sequence)
@@ -66,7 +65,12 @@ class App extends React.Component {
   render() {
     return (
       <>
-      <h1 style={{ "text-align": "center" }} className="header">Nussinov Visualization</h1>
+        <h1 style={{ "margin-top": "2%", "text-align": "center" }} className="header">Nussinov Visualization</h1>
+        <div style={{ "margin-left": "5%", "margin-top": "2%"}}>
+        <p>This is a visualization tool to understand Nussinov's algorithm.<br></br>
+        Given an RNA sequence, the algorithm will display the maximum number of pairs.<br></br>
+        Enter a RNA sequence below to get started.</p>
+        </div>
       <Form style={{ "margin-left": "5%", "width": "50%"}}>
         <Form.Group controlId="sequence">
           <Form.Label>Sequence</Form.Label>
@@ -79,7 +83,7 @@ class App extends React.Component {
           Submit
         </Button>
       </Form>
-      {" "}
+      <br></br>
       {this.state.displayTable && 
         <MatrixTable sequence={this.state.sequence} data={this.state.data} dotParentheses={this.state.dotParentheses} path={this.state.path} >
         </MatrixTable>}
@@ -94,8 +98,7 @@ class App extends React.Component {
            Got it
          </Button>
        </Modal.Footer>
-     </Modal>}
-        
+     </Modal>}        
       </>
     );
   }
