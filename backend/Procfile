@@ -1,1 +1,2 @@
-python3 nussinov.py
+web: gunicorn nussinov:app
+worker: python nussinov.py
