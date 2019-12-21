@@ -2,7 +2,7 @@
 by Thomas Yang, Betty Shen and Adarsh Ramchandran 
 CS466 Bioinformatics final project 
 
-![Nussinov Screenshot](./nussinov-screenshot.jpg)
+![Nussinov Screenshot](./nussinov-screenshot.png)
 
 You can explore our deployed version here: https://nussinov-visualization.herokuapp.com/ 
 
