@@ -39,7 +39,7 @@ pandas==0.25.3
 pathspec==0.6.0
 pluggy==0.13.0
 psycopg2==2.7.5
-py==1.8.0
+py==1.10.0
 pylint==2.4.4
 pymongo==3.9.0
 pyparsing==2.4.5
